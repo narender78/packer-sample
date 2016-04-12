@@ -9,7 +9,7 @@ Ubuntu 14.04 was used to test that everything here works.  Nothing is specific t
 
 # Using
 1. Install [Packer](https://www.packer.io/) on your machine
-1. Customize `ec2-build.sh` to fit your bootstrap requirements. This bootstrap ties into the previous presentation using [https://github.com/shanemeyers/puppet-sample](Masterless Puppet).
+1. Customize `ec2-build.sh` to fit your bootstrap requirements. This bootstrap ties into the previous presentation using [Masterless Puppet](https://github.com/shanemeyers/puppet-sample).
 1. Set up variables in the top section of `packer.json` to match your environment.
-  - AMIs used here were taken from [http://cloud-images.ubuntu.com/releases/14.04/release/](Ubuntu 14.04 Released AMIs)
+  - AMIs used here were taken from [Ubuntu 14.04 Released AMIs](http://cloud-images.ubuntu.com/releases/14.04/release/)
 1. Run packer: `packer build packer.json`
