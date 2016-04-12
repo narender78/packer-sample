@@ -1,0 +1,133 @@
+{
+    "variables": {
+        "base_ami_pv_ebs": "ami-8186feb1",
+        "base_ami_hvm_ebs": "ami-8786feb7",
+        "instance_type_pv": "m1.medium",
+        "instance_type_hvm": "c3.large",
+        "access_key": "",
+        "secret_key": "",
+        "security_group_id": "",
+        "subnet_id": "",
+        "region": "us-west-2",
+        "vpc_id": "",
+        "iam_role": "packer"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "name": "pv-ebs",
+            "ami_name": "pv-ebs {{timestamp}}",
+            "access_key": "{{user `access_key`}}",
+            "secret_key": "{{user `secret_key`}}",
+            "region": "{{user `region`}}",
+            "source_ami": "{{user `base_ami_ebs`}}",
+            "instance_type": "{{user `instance_type_pv`}}",
+            "iam_instance_profile": "{{user `iam_role`}}",
+            "security_group_id": "{{user `security_group_id`}}",
+            "subnet_id": "{{user `subnet_id`}}",
+            "vpc_id": "{{user `vpc_id`}}",
+            "ami_block_device_mappings": [
+                {
+                    "device_name": "/dev/sdb",
+                    "virtual_name": "ephemeral0"
+                },
+                {
+                    "device_name": "/dev/sdc",
+                    "virtual_name": "ephemeral1"
+                },
+                {
+                    "device_name": "/dev/sdd",
+                    "virtual_name": "ephemeral2"
+                },
+                {
+                    "device_name": "/dev/sde",
+                    "virtual_name": "ephemeral3"
+                },
+                {
+                    "device_name": "/dev/sdf",
+                    "virtual_name": "ephemeral4"
+                },
+                {
+                    "device_name": "/dev/sdg",
+                    "virtual_name": "ephemeral5"
+                },
+                {
+                    "device_name": "/dev/sdh",
+                    "virtual_name": "ephemeral6"
+                },
+                {
+                    "device_name": "/dev/sdi",
+                    "virtual_name": "ephemeral7"
+                }
+            ],
+            "run_tags": {
+                "Name": "packer-builder"
+            },
+            "tags": {
+                "ami-base": "{{user `base_ami_ebs`}}"
+            },
+            "ssh_username": "ubuntu"
+        },
+        {
+            "type": "amazon-ebs",
+            "name": "hvm-ebs",
+            "ami_name": "hvm-ebs {{timestamp}}",
+            "access_key": "{{user `access_key`}}",
+            "secret_key": "{{user `secret_key`}}",
+            "region": "{{user `region`}}",
+            "source_ami": "{{user `base_ami_hvm_ebs`}}",
+            "instance_type": "{{user `instance_type_hvm`}}",
+            "iam_instance_profile": "{{user `iam_role`}}",
+            "security_group_id": "{{user `security_group_id`}}",
+            "subnet_id": "{{user `subnet_id`}}",
+            "vpc_id": "{{user `vpc_id`}}",
+            "ami_block_device_mappings": [
+                {
+                    "device_name": "/dev/sdb",
+                    "virtual_name": "ephemeral0"
+                },
+                {
+                    "device_name": "/dev/sdc",
+                    "virtual_name": "ephemeral1"
+                },
+                {
+                    "device_name": "/dev/sdd",
+                    "virtual_name": "ephemeral2"
+                },
+                {
+                    "device_name": "/dev/sde",
+                    "virtual_name": "ephemeral3"
+                },
+                {
+                    "device_name": "/dev/sdf",
+                    "virtual_name": "ephemeral4"
+                },
+                {
+                    "device_name": "/dev/sdg",
+                    "virtual_name": "ephemeral5"
+                },
+                {
+                    "device_name": "/dev/sdh",
+                    "virtual_name": "ephemeral6"
+                },
+                {
+                    "device_name": "/dev/sdi",
+                    "virtual_name": "ephemeral7"
+                }
+            ],
+            "run_tags": {
+                "Name": "packer-builder"
+            },
+            "tags": {
+                "ami-base": "{{user `base_ami_hvm_ebs`}}"
+            },
+            "ssh_username": "ubuntu"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "ec2-build.sh"
+        }
+    ]
+}
